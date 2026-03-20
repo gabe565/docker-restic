@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>gabe565/renovate-config"
+    "local>gabe565/renovate-config",
+    ":automergeAll"
   ],
   "regexManagers": [
     {
@@ -11,12 +12,6 @@
         "<!--renovate image=(?<depName>.+) -->\\n.*\\/Version-v(?<currentValue>.+?)-"
       ],
       "datasourceTemplate": "docker"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["ghcr.io/restic/restic"],
-      "automerge": true
     }
   ]
 }
