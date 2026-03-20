@@ -7,8 +7,8 @@
     {
       "fileMatch": ["Dockerfile", "^\\.github/workflows/", "README.md"],
       "matchStrings": [
-        "\\s*RESTIC_IMAGE: +(?<depName>.+)\\n\\s*RESTIC_TAG: +(?<currentValue>.+)",
-        "ARG +RESTIC_IMAGE=(?<depName>.+)\\nARG +RESTIC_TAG=(?<currentValue>.+)",
+        "\\s*RESTIC_IMAGE: +(?<depName>.+)\\n\\s*RESTIC_TAG: +(?<currentValue>.+)@(?<currentDigest>.+)",
+        "ARG +RESTIC_IMAGE=(?<depName>.+)\\nARG +RESTIC_TAG=(?<currentValue>.+)@(?<currentDigest>.+)",
         "<!--renovate image=(?<depName>.+) -->\\n.*\\/Version-v(?<currentValue>.+?)-"
       ],
       "datasourceTemplate": "github-releases"

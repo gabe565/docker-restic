@@ -7,8 +7,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  RESTIC_IMAGE: cupcakearmy/restic
-  RESTIC_TAG: "0.18.1"
+  RESTIC_IMAGE: ghcr.io/restic/restic
+  RESTIC_TAG: 0.18.1@sha256:c1958a2a1c8614f5c317347c2aaddd9f426076f0521430b55509eba43d7516ee
 
 jobs:
   build:
