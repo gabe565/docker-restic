@@ -6,6 +6,7 @@ FROM ghcr.io/bdd/runitor:v1.4.1-alpine@sha256:2b8314456908065f5d79cd25c7c310ddec
 FROM ghcr.io/gabe565/moreutils:0.6.1@sha256:ae74fb352762709efdb79a67d1b51ab78d6fd04b2e39eb6d53e218674e7dc4e5 AS moreutils
 
 FROM $RESTIC_IMAGE:$RESTIC_TAG AS restic
+RUN test -f /usr/bin/restic
 
 RUN apk add --no-cache postgresql-client mariadb-client mongodb-tools sqlite
 
