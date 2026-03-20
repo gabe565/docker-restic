@@ -38,7 +38,7 @@ outer:
 				if len(args) > i+1 {
 					next := args[i+1]
 					switch filepath.Base(next) {
-					case "backup-cnpg.sh", "backup-mariadb.sh":
+					case "backup-cnpg.sh", "backup-mariadb.sh", "backup-sqlite.sh":
 						stdinExtension = ".sql"
 					case "backup-mongodb.sh":
 						stdinExtension = ".dmp"
