@@ -1,13 +1,59 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -eu
 
 cmd="${1:-}"
+args=("$@")
 
 case "$cmd" in
   backup|forget|snapshots)
-    exec /usr/bin/restic --group-by="$RESTIC_GROUP_BY" "$@"
-    ;;
-  *)
-    exec /usr/bin/restic "$@"
+    has_group_by=false
+    has_stdin_from_command=false
+    has_stdin_filename=false
+    stdin_extension=''
+    next_is_stdin_command=false
+    args=()
+
+    for arg in "$@"; do
+      if [[ "$next_is_stdin_command" == true ]]; then
+        case "${arg##*/}" in
+          backup-cnpg.sh|backup-mariadb.sh)
+            stdin_extension=.sql
+            ;;
+          backup-mongodb.sh)
+            stdin_extension=.dmp
+            ;;
+        esac
+
+        next_is_stdin_command=false
+      fi
+
+      case "$arg" in
+        --group-by|--group-by=*)
+          has_group_by=true
+          ;;
+        --stdin-from-command)
+          has_stdin_from_command=true
+          ;;
+        --stdin-filename|--stdin-filename=*)
+          has_stdin_filename=true
+          ;;
+        --)
+          next_is_stdin_command=true
+          ;;
+      esac
+    done
+
+    if [[ "$has_group_by" == false && -n "${RESTIC_GROUP_BY:-}" ]]; then
+      args+=(--group-by="$RESTIC_GROUP_BY")
+    fi
+
+    if [[ "$has_stdin_from_command" == true && "$has_stdin_filename" == false && -n "${RESTIC_HOST:-}" ]]; then
+      args+=(--stdin-filename="$RESTIC_HOST$stdin_extension")
+    fi
+
+    args+=("$@")
     ;;
 esac
+
+set +u
+exec /usr/bin/restic "${args[@]}"
