@@ -7,7 +7,7 @@ import (
 )
 
 func New() *cobra.Command {
-	var mount, host, database, username, password string
+	var mount, host, port, database, username, password string
 	var dryRun bool
 
 	fs := &cobrax.Flags{}
@@ -27,6 +27,7 @@ func New() *cobra.Command {
 				"--if-exists",
 				"--no-owner",
 				"--host=" + host,
+				"--port=" + port,
 				"--username=" + username,
 				"--dbname=" + database,
 			}, args...)
@@ -42,6 +43,8 @@ func New() *cobra.Command {
 	fs.String(&mount, "secret-mount", "", "/postgresql-app", "Directory where secrets are mounted")
 	fs.String(&host, dumpdb.FlagHost, "H", "", "Database host",
 		cobrax.Env("DB_HOST"), cobrax.SecretFile(&mount, "host"))
+	fs.String(&port, dumpdb.FlagPort, "p", "5432", "Database port",
+		cobrax.Env("DB_PORT"), cobrax.SecretFile(&mount, "port"))
 	fs.String(&database, dumpdb.FlagDatabase, "d", "", "Database name",
 		cobrax.Env("DB_DATABASE"), cobrax.SecretFile(&mount, "dbname"))
 	fs.String(&username, dumpdb.FlagUsername, "u", "", "Database user",

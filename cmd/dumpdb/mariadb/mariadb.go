@@ -7,7 +7,7 @@ import (
 )
 
 func New() *cobra.Command {
-	var mount, host, database, username, password string
+	var mount, host, port, database, username, password string
 	var dryRun bool
 
 	fs := &cobrax.Flags{}
@@ -24,6 +24,7 @@ func New() *cobra.Command {
 				"--skip-dump-date",
 				"--single-transaction",
 				"--host=" + host,
+				"--port=" + port,
 				"--user=" + username,
 				database,
 			}, args...)
@@ -39,6 +40,8 @@ func New() *cobra.Command {
 	fs.String(&mount, "secret-mount", "", "/mariadb", "Directory where secrets are mounted")
 	fs.String(&host, dumpdb.FlagHost, "H", "", "Database host",
 		cobrax.Env("DB_HOST"))
+	fs.String(&port, dumpdb.FlagPort, "p", "3306", "Database port",
+		cobrax.Env("DB_PORT"))
 	fs.String(&database, dumpdb.FlagDatabase, "d", "", "Database name",
 		cobrax.Env("DB_DATABASE"))
 	fs.String(&username, dumpdb.FlagUsername, "u", "", "Database user",

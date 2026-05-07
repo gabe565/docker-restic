@@ -12,6 +12,7 @@ import (
 
 const (
 	FlagHost     = "host"
+	FlagPort     = "port"
 	FlagDatabase = "database"
 	FlagUsername = "username"
 	FlagPassword = "password"
