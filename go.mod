@@ -1,6 +1,6 @@
 module github.com/gabe565/docker-restic
 
-go 1.26.4
+go 1.26.5
 
 require (
 	gabe565.com/utils v0.0.0-20260511235214-4059440fa83b
