@@ -43,7 +43,7 @@ outer:
 				if len(subCmd) >= 2 && filepath.Base(subCmd[0]) == "dumpdb" {
 					stdinExt = ".sql"
 					switch subCmd[1] {
-					case "cnpg", "mongodb":
+					case "cnpg", "postgres", "mongodb":
 						stdinExt = ".dmp"
 					case "sqlite":
 						if len(subCmd) >= 3 {
