@@ -21,6 +21,10 @@ FROM go-deps AS dumpdb
 COPY cmd/dumpdb cmd/dumpdb
 RUN go build -ldflags='-w -s' -trimpath ./cmd/dumpdb
 
+FROM go-deps AS restoredb
+COPY cmd/restoredb cmd/restoredb
+RUN go build -ldflags='-w -s' -trimpath ./cmd/restoredb
+
 
 FROM $RESTIC_IMAGE:$RESTIC_TAG AS restic
 RUN test -f /usr/bin/restic
@@ -31,6 +35,7 @@ COPY --from=runitor /usr/local/bin/runitor /usr/bin/runitor
 COPY --from=moreutils /usr/bin/ts /usr/bin/ts
 COPY --from=wrapper /app/restic-wrapper /usr/local/bin/restic
 COPY --from=dumpdb /app/dumpdb /usr/bin/dumpdb
+COPY --from=restoredb /app/restoredb /usr/bin/restoredb
 COPY rootfs /
 
 ENV KUBECONFIG=/.kube/config
