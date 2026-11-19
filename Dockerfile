@@ -1,5 +1,5 @@
 ARG RESTIC_IMAGE=restic/restic
-ARG RESTIC_TAG=0.19.1
+ARG RESTIC_TAG=0.20.0
 
 FROM ghcr.io/bdd/runitor:v1.4.1-alpine@sha256:6615cb301e31efeab3f6084b66972bd66da3fe484356e2c912a3814229b02079 AS runitor
 
